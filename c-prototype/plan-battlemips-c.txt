@@ -1,0 +1,65 @@
+DEFINITIONS
+
+#define LIGS 10
+#define COLS 10
+#define MAX_COUPS 17
+
+
+VARIABLES GLOBALES
+
+int *grilleUser
+int *grilleOrdi
+int coupsUser
+int coupsOrdi
+
+
+FONCTIONS IO :
+
+void afficherJeu (char *message) : afficher l'interface du jeu
+
+=======================================================================
+              JOUEUR               |             ORDINATEUR            
+              ------               |             ----------            
+    A  B  C  D  E  F  G  H  I  J   |      A  B  C  D  E  F  G  H  I  J 
+1  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]  |  1  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
+2  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]  |  2  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
+3  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]  |  3  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
+4  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]  |  4  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
+5  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]  |  5  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
+6  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]  |  6  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
+7  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]  |  7  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
+8  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]  |  8  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
+9  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]  |  9  [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
+10 [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]  |  10 [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
+-----------------------------------------------------------------------
+Message, par exemple: "À vous de jouer!", "L'ordinateur a choisi : C5" 
+=======================================================================
+
+void afficherCase (int contenu) : afficher la case selon le contenu.
+Choix possibles :
+    B - Bateau ([B])
+    x - Coup réussi ([x])
+    o - Coup manqué ([o])
+
+
+FONCTIONS JEU :
+
+void jouerCoupUser (void) : jouer un coup d'utilisateur. Doit demander à l'utilisateur de saisir une case valide (case pas choisie antérieurement, entre A1 et J10; on demandera d'abord la colonne, puis la ligne, afin de faciliter le parsing), puis effectuer les changements nécessaires dans les matrices grilleJoueur & grilleOrdi.
+
+void jouerCoupOrdi (void) : jouer un coup d'ordinateur. Si le dernier coup (variable dernierCoupOrdi) n'était pas réussi, il choisit une case au hasard et il effectue un coup. Si le dernier coup était réussi, il choisit au hasard une des quatre cases qui entourent la case du dernier coup et il effectue à nouveau un coup.
+
+void placementBateaux (int *grille) : placer les 5 bateaux (de tailles 5, 4, 3, 3, 2) au hasard dans la grille. Pour chaque bateau, on doit avoir une choix au hasard qui va déterminer si le bateau va être placé horizontalement ou verticalement, et une autre choix au hasard qui va déterminer ou va être placé le bateau (en respectant sa taille, ainsi que la place dans la grille occupée par les autres bateaux).
+
+void jouerBataille (void) : jouer une partie de bataille navale. Doit effectuer une initialisation du jeu, puis, à chaque tour, un coup d'utilisateur, puis un coup d'ordinateur, puis un affichage de la grille avec les résultats des deux coups. L'affichage va s'effectuer tout en haut de la boucle principale du jeu, pour deux raisons : 1. parce que le jeu doit commencer avec un affichage afin que l'utilisateur sache où sont placés ses bateaux et 2. parce que, dès qu'il y a un coup gagnant, on veut sortir de la boucle et afficher un message spécial ("X a gagné !"). La condition de la boucle va être donc : (coupsUser < MAX_COUPS && coupsOrdi < MAX_COUPS)
+
+
+FONCTIONS MENU :
+
+int main (void) : la fonction main. Lance le menu.
+
+void menu (void) : le menu principal. Il offre trois choix:
+    1. Jouer une partie de Bataille Navale (lance jouerBataille())
+    2. Aide - règles du jeu (lance aide())
+    3. Quitter (return 0)
+
+void aide (void) : afficher l'aide. Explique les règles du jeu et effectue un retour au menu principal quand l'utilisateur tape sur la touche "entrée".
