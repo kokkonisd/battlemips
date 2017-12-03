@@ -1,11 +1,11 @@
-DEFINITIONS
+DEFINITIONS [DONE]
 
 #define LIGS 10
 #define COLS 10
 #define MAX_COUPS 17
 
 
-VARIABLES GLOBALES
+VARIABLES GLOBALES [DONE]
 
 int *grilleUser
 int *grilleOrdi
@@ -14,9 +14,9 @@ int coupsOrdi
 int dernierCoupOrdi
 
 
-FONCTIONS IO :
+FONCTIONS IO : [DONE]
 
-void afficherJeu (char *message) : afficher l'interface du jeu
+void afficherJeu (char *message) : afficher l'interface du jeu [DONE]
 
 =======================================================================
               JOUEUR               |             ORDINATEUR            
@@ -36,7 +36,7 @@ void afficherJeu (char *message) : afficher l'interface du jeu
 Message, par exemple: "À vous de jouer!", "L'ordinateur a choisi : C5" 
 =======================================================================
 
-void afficherCase (int contenu) : afficher la case selon le contenu.
+void afficherCase (int contenu) : afficher la case selon le contenu. [DONE]
 Choix possibles :
     B - Bateau ([B])
     x - Coup réussi ([x])
@@ -46,6 +46,8 @@ Choix possibles :
 FONCTIONS JEU :
 
 [Convention : "l'encodage" des numéros des cases est de la forme "XXYY", où XX est le numéro de ligne et YY le numéro de colonne. Par exemple, 10J est "1010", 2A est "0201", 5G est "0507" etc.]
+
+void initJeu (void) : initialiser le jeu. Remplir les deux grilles par des 0, effectuer un reset sur les variables coupsOrdi, coupsUser, dernierCoupOrdi. [DONE]
 
 void jouerCoupUser (void) : jouer un coup d'utilisateur. Doit demander à l'utilisateur de saisir une case valide (case pas choisie antérieurement, entre A1 et J10; on demandera d'abord la colonne, puis la ligne, afin de faciliter le parsing), puis effectuer les changements nécessaires dans les matrices grilleJoueur & grilleOrdi.
 
