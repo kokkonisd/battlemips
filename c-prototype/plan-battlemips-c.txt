@@ -45,8 +45,6 @@ Choix possibles :
 
 FONCTIONS JEU :
 
-[Convention : "l'encodage" des numéros des cases est de la forme "XXYY", où XX est le numéro de ligne et YY le numéro de colonne. Par exemple, 10J est "1010", 2A est "0201", 5G est "0507" etc.]
-
 void initJeu (void) : initialiser le jeu. Remplir les deux grilles par des 0, effectuer un reset sur les variables coupsOrdi, coupsUser, dernierCoupOrdi. [DONE]
 
 void jouerCoupUser (void) : jouer un coup d'utilisateur. Doit demander à l'utilisateur de saisir une case valide (case pas choisie antérieurement, entre A1 et J10; on demandera d'abord la colonne, puis la ligne, afin de faciliter le parsing), puis effectuer les changements nécessaires dans les matrices grilleJoueur & grilleOrdi.
