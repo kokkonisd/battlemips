@@ -27,6 +27,7 @@ int main (int argc, char *argv[])
     // on affiche les grilles
     afficherJeu("Voici un message test");
     coupJoueur();
+    afficherJeu("Voici un message test");
     // libérer la mémoire des grilles
     free(grilleOrdi);
     free(grilleUser);

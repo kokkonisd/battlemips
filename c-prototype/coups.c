@@ -13,10 +13,10 @@ void vide_input (){
 }
 
 void entrezEntier(char message[], int *case_coup){
-	char coup[4];
+	char coup[5];
 
 	printf("%s\n", message);
-	fgets (coup, 4, stdin);
+	fgets (coup, 5, stdin);
 	// on vide l'input pur eviter toute erreur
 	if (coup [strlen (coup) - 1] != '\n')
 		vide_input();
@@ -27,18 +27,22 @@ void entrezEntier(char message[], int *case_coup){
 		else
 			*case_coup = (coup[0] - 49)*COLS + (coup[1] - 65);// traitement cas ou formats indésirés
 	}
-	//on 10 et une lettre
+	//on a 10 et une lettre
 	else if (strlen (coup) == 4){
 		if(coup [0] != 49 || coup [1] != 48 || coup [2] < 65 || coup [2] > 74)
 			entrezEntier ("Erreur dans le format, respectez ab avec 1 <= a <= 9 et A <= b <= J\n", case_coup);
 		else 
-			*case_coup = 9*COLS + (coup[1] - 65);//traitements formats indésirés
+			*case_coup = 9*COLS + (coup[2] - 65);//traitements formats indésirés
 	}
-
+	else
+		entrezEntier ("Erreur dans le format, respectez ab avec 1 <= a <= 9 et A <= b <= J\n", case_coup);
 }
 
 void coupJoueur(){
 	int *case_coup = malloc (sizeof (int));
 
 	entrezEntier("Entrez la case à jouer en respectant le format ab avec 1 <= a <= 9 et A <= b <= J\n", case_coup);
+
+	//test
+	grilleUser[*case_coup] = 3;
 }
