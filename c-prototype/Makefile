@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -g
-OBJECTS = main.o battleshipsJeu.o battleshipsIO.o
+OBJECTS = main.o battleshipsJeu.o battleshipsIO.o coups.o
 
 battleships : $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o battleships
@@ -12,4 +12,4 @@ battleships : $(OBJECTS)
 %.c : %.h
 
 clean :
-	rm -f battleships
+	rm -f battleships *.o

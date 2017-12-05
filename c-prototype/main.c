@@ -3,6 +3,7 @@
 #include "main.h"
 #include "battleshipsIO.h"
 #include "battleshipsJeu.h"
+#include "coups.h"
 
 int *grilleUser;
 int *grilleOrdi;
@@ -25,7 +26,7 @@ int main (int argc, char *argv[])
     grilleUser[64] = 1;
     // on affiche les grilles
     afficherJeu("Voici un message test");
-
+    coupJoueur();
     // libérer la mémoire des grilles
     free(grilleOrdi);
     free(grilleUser);
