@@ -51,7 +51,7 @@ void initJeu (void) : initialiser le jeu. Remplir les deux grilles par des 0, ef
 
 void jouerCoupUser (void) : jouer un coup d'utilisateur. Doit demander à l'utilisateur de saisir une case valide (case pas choisie antérieurement, entre A1 et J10; on demandera d'abord la colonne, puis la ligne, afin de faciliter le parsing), puis effectuer les changements nécessaires dans les matrices grilleJoueur & grilleOrdi.
 
-void jouerCoupOrdi (void) : jouer un coup d'ordinateur. Si le dernier coup (variable dernierCoupOrdi) n'était pas réussi, il choisit une case au hasard et il effectue un coup. Si le dernier coup était réussi, il choisit au hasard une des quatre cases qui entourent la case du dernier coup et il effectue à nouveau un coup.
+int jouerCoupOrdi (void) : jouer un coup d'ordinateur. Si le dernier coup (variable dernierCoupOrdi) n'était pas réussi, il choisit une case au hasard et il effectue un coup. Si le dernier coup était réussi, il choisit au hasard une des quatre cases qui entourent la case du dernier coup et il effectue à nouveau un coup. La valeur de rétour est le numéro de la case si le coup était réussi, et -1 sinon.
 
 void placementBateaux (int *grille) : placer les 5 bateaux (de tailles 5, 4, 3, 3, 2) au hasard dans la grille. Pour chaque bateau, on doit avoir une choix au hasard qui va déterminer si le bateau va être placé horizontalement ou verticalement, et une autre choix au hasard qui va déterminer ou va être placé le bateau (en respectant sa taille, ainsi que la place dans la grille occupée par les autres bateaux).
 
