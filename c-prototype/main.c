@@ -4,6 +4,7 @@
 #include "battleshipsIO.h"
 #include "battleshipsJeu.h"
 #include "coups.h"
+#include "placeBateaux.h"
 
 int *grilleUser;
 int *grilleOrdi;
@@ -21,14 +22,16 @@ int main (int argc, char *argv[])
 
     // initialisation
     initJeu();
-    // on modifie les grilles pour voir ce que ça donne
-    grilleOrdi[32] = 2;
-    grilleUser[64] = 1;
     // on affiche les grilles
     afficherJeu("Voici un message test");
-    coupJoueur();
-    afficherJeu("Voici un message test");
     // libérer la mémoire des grilles
+    placeBateaux (grilleOrdi);
+    placeBateaux (grilleUser);
+    afficherJeu("Voici un message test");
+    coupJoueur ();
+    afficherJeu("Voici un message test");
+    coupJoueur ();
+    afficherJeu("Voici un message test");
     free(grilleOrdi);
     free(grilleUser);
 
