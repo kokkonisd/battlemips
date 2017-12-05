@@ -5,11 +5,9 @@
 void initJeu (void)
 {
     // initialisation de tous les élements des deux grilles à 0
-    for (int i = 0; i < (LIGS * COLS); i += LIGS) {
-        for (int j = 0; j < COLS; j++) {
-            grilleUser[i + j] = 0;
-            grilleOrdi[i + j] = 0;
-        }
+    for (int i = 0; i < (LIGS * COLS); i++) {
+        grilleUser[i] = 0;
+        grilleOrdi[i] = 0;
     }
 
     // initialisation des coupsUser & coupsOrdi à 0
