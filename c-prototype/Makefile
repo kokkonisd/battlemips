@@ -2,6 +2,8 @@ CC = gcc
 CFLAGS = -Wall -g
 OBJECTS = main.o battleshipsJeu.o battleshipsIO.o coups.o placeBateaux.o
 
+all : battleships
+
 battleships : $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o battleships
 	rm -f $(OBJECTS)

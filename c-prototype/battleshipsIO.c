@@ -7,15 +7,27 @@
 1 : bateau
 2 : coup réussi
 3 : coup manqué
+
+Joueur indique le numéro du joueur dont on
+affiche la grille.
+Par convention,
+0 : utilisateur
+1 : ordi
 */
-void afficherCase (int contenu)
+void afficherCase (int contenu, int joueur)
 {
     switch (contenu) {
         case 0:
             printf("[%c]", CASE_VIDE);
             break;
         case 1:
-            printf("[%c]", CASE_BATEAU);
+            // si c'est l'utilisateur, afficher les bateaux
+            // si c'est l'ordi, les bateux sont invisibles
+            if (joueur == 0) {
+                printf("[%c]", CASE_BATEAU);
+            } else {
+                printf("[%c]", CASE_VIDE);
+            }
             break;
         case 2:
             printf("[%c]", CASE_REUSSI);
@@ -40,7 +52,7 @@ void afficherJeu (char *message)
     // compteur des lignes
     int compt = 1;
 
-    for (int i = 0; i < (LIGS * COLS); i += LIGS) {
+    for (int i = 0; i < (LIGS * COLS); i += COLS) {
         // numéro de ligne User
         if (compt < 10) {
             printf("%d  ", compt);
@@ -49,7 +61,7 @@ void afficherJeu (char *message)
         }
         // grille User
         for (int j = 0; j < COLS; j++) {
-            afficherCase(grilleUser[i + j]);
+            afficherCase(grilleUser[i + j], 0);
         }
 
         // barrière
@@ -63,7 +75,7 @@ void afficherJeu (char *message)
         }
         // grille Ordi
         for (int j = 0; j < COLS; j++) {
-            afficherCase(grilleOrdi[i + j]);
+            afficherCase(grilleOrdi[i + j], 1);
         }
 
         printf("\n");
