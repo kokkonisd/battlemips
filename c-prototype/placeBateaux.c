@@ -5,121 +5,72 @@
 #include "battleshipsIO.h"
 #include "main.h"
 
-void creeTableauVertical(int temp[], int *nbDeCasesPossibles, int *grille, int taille_bateau){
-	int i, j;
+//on test pour savoir si le bateau peut être placé et on retourne 1 si ou 0 si non
+int controleDePlacement (int point0, int orientation, int taille_bateau, int tableau[]){
+	int i;
 
-	for ( i = 0; i < LIGS*COLS; i++){
-
-			if ( i >= COLS*(LIGS - (taille_bateau - 1)) )
-				temp[i] = 0;
-
-			else if (grille[i] == 0){
-				temp[i] = 1;
-				(*nbDeCasesPossibles)++;
-			}
-
-			if ( grille [i] == 1 ){
-				for ( j = 0; j < taille_bateau; j++){
-					if(i - j*COLS >= 0 && temp[i - j*COLS] == 1){
-						temp[i - j*COLS] = 0;
-						(*nbDeCasesPossibles)--;
-					}
-				}
-			}
-	}
-}
-
-void creeTableauHorizontal (int temp[], int *nbDeCasesPossibles, int *grille, int taille_bateau){
-	int i, j;
-
-	for ( i = 0; i < LIGS*COLS; i++){
-		if ( i % COLS > COLS - taille_bateau )
-			temp[i] = 0;
-
-		else if (grille[i] == 0){
-			temp[i] = 1;
-			(*nbDeCasesPossibles)++;
-		}
-
-		if ( grille [i] == 1 ){
-			for ( j = 0; j < taille_bateau; j++){
-				if (i % COLS - j >= 0 && temp[i - j] == 1){
-					temp[i - j] = 0;
-					(*nbDeCasesPossibles)--;
-				}
+	//cas ou il est placé horizontalement
+	if (orientation == 0 )
+		for (i = 0; i < taille_bateau; i++){
+			//(taille_bateau + point0) % COLS < taille_bateau, nous permet de savoir si on a dépassé le tableau
+			if (tableau[i + point0] != 0 || (taille_bateau + point0) % COLS < taille_bateau ){
+				return 0;			
 			}
 		}
-	}
-}
-
-//Par convention 0 est horizontal, 1 est vertical
-void tableauCasesPossibles ( int orientation, int taille_bateau, int tableau_cases_libres[], int *nbDeCasesPossibles, int *grille){
-	int i, j;
-	int temp[LIGS*COLS];//tableau de valeures temporaires. 0 si on peut pas placer le bateau 1 si oui
-	*nbDeCasesPossibles = 0;
-	//Par convention on test avec la case 0 du bateau verticalement ou horizontalement
-	if (orientation == 1)
-		//verticalement
-		creeTableauVertical (temp, nbDeCasesPossibles, grille, taille_bateau);
 	else
-		//horizontalement
-		creeTableauHorizontal (temp, nbDeCasesPossibles, grille, taille_bateau);
-
-
-
-	j = 0;
-	//creer le tableau de cases libres
-	for (i = 0; i < LIGS*COLS; i++)
-	{
-		if( temp[i] == 1){
-			tableau_cases_libres[j] = i;
-			j++;
+		for (i = 0; i < taille_bateau; i++){
+		if (tableau[i*COLS + point0] != 0 || i*COLS + point0 >= COLS*LIGS - 1){
+				return 0;
+			}
 		}
-	}
-	
+
+	return 1;
+}
+
+
+void creeBateau (int point0, int taille, int orientation, int tableau[]){
+	int i;
+	//cas ou il est placé horizontalement
+	if (orientation == 0 )
+		for (i = 0; i < taille; i++)
+			tableau[point0 + i] = 1;
+	//cas ou il est placé verticalement
+	else
+		for (i = 0; i < taille; i++)
+			tableau[point0 + i*COLS] = 1;
 }
 
 
 void placeBateaux (int *grille){
 	srand(time(NULL));	
-	int orientation, taille_bateau, point0, i;//premier point du bateau
-	int *tableau_cases_libres;
-	//Pour éviter de dépasser le tableau
-	int *nbDeCasesPossibles = malloc (sizeof(int));
+	int orientation, taille_bateau, point0;//premier point du bateau
 
 	for ( taille_bateau = 5; taille_bateau > 1; taille_bateau--){
 
-		tableau_cases_libres = malloc( sizeof(int)*COLS*LIGS );
 		orientation = rand() % 2;
+		//on place aléatoirement le point de départ
+		point0 = rand() % (COLS*LIGS - 1);
 
-		tableauCasesPossibles (orientation, taille_bateau, tableau_cases_libres, nbDeCasesPossibles, grille);
-		point0 = tableau_cases_libres [rand() % *nbDeCasesPossibles];
-
-		if(orientation == 1){
-			for ( i = 0; i < taille_bateau; i++){
-				grille [point0 + i*COLS] = 1;
-			}
+		//on va controler si le bateau peut être placé, si non on augmente la case de un
+		while (controleDePlacement (point0, orientation, taille_bateau, grille) == 0){
+			if (point0 >= LIGS*COLS - 1)
+				point0 = 0;
+			else
+				point0 ++;
 		}
-		else
-			for ( i = 0; i < taille_bateau; i++){
-				grille [point0 + i] = 1;
-			}
-		free( tableau_cases_libres );
+		creeBateau(point0, taille_bateau, orientation, grille);
 	}
-		tableau_cases_libres = malloc( sizeof(int)*COLS*LIGS );
-		orientation = rand() % 2;
+		//comme il doit y avoir 2 bateaux 3 on refait la même chose	
+	orientation = rand() % 2;
+		//on place aléatoirement le point de départ
+	point0 = rand() % (COLS*LIGS - 1);
 
-		tableauCasesPossibles (orientation, 3, tableau_cases_libres, nbDeCasesPossibles, grille);
-		point0 = tableau_cases_libres [rand() % *nbDeCasesPossibles];
-
-		if(orientation == 1){
-			for ( i = 0; i < 3; i++){
-				grille [point0 + i*COLS] = 1;
-			}
+		//on va controler si le bateau peut être placé, si non on augmente la case de un
+		while (controleDePlacement (point0, orientation, 3, grille) == 0){
+			if (point0 >= LIGS*COLS - 1)
+				point0 = 0;
+			else
+				point0 ++;
 		}
-		else
-			for ( i = 0; i < 3; i++){
-				grille [point0 + i] = 1;
-			}
-		free( tableau_cases_libres );
+		creeBateau(point0, 3, orientation, grille);
 }
