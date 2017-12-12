@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -g
-OBJECTS = main.o battleshipsJeu.o battleshipsIO.o coups.o placeBateaux.o
+OBJECTS = main.o battleshipsJeu.o battleshipsIO.o
 
 all : battleships
 

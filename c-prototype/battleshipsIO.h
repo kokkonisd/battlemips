@@ -7,6 +7,7 @@
 #define CASE_MANQUE 'o'
 #define CASE_BUG '?'
 
-extern void afficherJeu (char *message);
+extern void afficherJeu (void);
+extern char *caseToLisible (int num_case);
 
 #endif

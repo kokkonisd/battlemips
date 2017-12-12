@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "battleshipsIO.h"
 #include "main.h"
 
@@ -42,7 +44,7 @@ void afficherCase (int contenu, int joueur)
 }
 
 
-void afficherJeu (char *message)
+void afficherJeu (void)
 {
     printf("=======================================================================\n");
     printf("              JOUEUR               |             ORDINATEUR            \n");
@@ -83,8 +85,93 @@ void afficherJeu (char *message)
         compt++;
     }
 
-    printf("-----------------------------------------------------------------------\n");
-    // afficher le message
-    printf("%s\n", message);
     printf("=======================================================================\n");
+}
+
+char *caseToLisible (int num_case)
+{
+    int ligne, colonne;
+    int next = 0;
+    char *resultat;
+
+    ligne = num_case / COLS + 1;
+    colonne = num_case % COLS + 1;
+
+    resultat = malloc(5 * sizeof(char));
+
+    switch (colonne) {
+        case 1:
+            resultat[next] = 'A';
+            break;
+        case 2:
+            resultat[next] = 'B';
+            break;
+        case 3:
+            resultat[next] = 'C';
+            break;
+        case 4:
+            resultat[next] = 'D';
+            break;
+        case 5:
+            resultat[next] = 'E';
+            break;
+        case 6:
+            resultat[next] = 'F';
+            break;
+        case 7:
+            resultat[next] = 'G';
+            break;
+        case 8:
+            resultat[next] = 'H';
+            break;
+        case 9:
+            resultat[next] = 'I';
+            break;
+        case 10:
+            resultat[next] = 'J';
+            break;
+    }
+
+    next++;
+
+    switch (ligne) {
+        case 1:
+            resultat[next] = '1';
+            break;
+        case 2:
+            resultat[next] = '2';
+            break;
+        case 3:
+            resultat[next] = '3';
+            break;
+        case 4:
+            resultat[next] = '4';
+            break;
+        case 5:
+            resultat[next] = '5';
+            break;
+        case 6:
+            resultat[next] = '6';
+            break;
+        case 7:
+            resultat[next] = '7';
+            break;
+        case 8:
+            resultat[next] = '8';
+            break;
+        case 9:
+            resultat[next] = '9';
+            break;
+        case 10:
+            resultat[next] = '1';
+            next++;
+            resultat[next] = '0';
+            break;
+    }
+
+    next++;
+
+    resultat[next] = '\0';
+
+    return resultat;
 }

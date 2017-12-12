@@ -8,6 +8,7 @@ extern int *grilleUser;
 extern int *grilleOrdi;
 extern int coupsUser;
 extern int coupsOrdi;
+extern int dernierCoupUser;
 extern int dernierCoupOrdi;
 
 #endif

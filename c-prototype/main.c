@@ -1,20 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "main.h"
 #include "battleshipsIO.h"
 #include "battleshipsJeu.h"
-#include "coups.h"
-#include "placeBateaux.h"
 
 int *grilleUser;
 int *grilleOrdi;
 int coupsUser;
 int coupsOrdi;
+int dernierCoupUser;
 int dernierCoupOrdi;
 
 int main (int argc, char *argv[])
 {
-    /* CONFIGURATION POUR TESTER afficherJeu */
+    srand(time(NULL));
+    char *verdict = malloc(7 * sizeof(char));
 
     // allouer de la mémoire pour les grilles
     grilleUser = malloc(sizeof(int) * LIGS * COLS);
@@ -22,16 +23,33 @@ int main (int argc, char *argv[])
 
     // initialisation
     initJeu();
-    // on affiche les grilles
-    afficherJeu("Voici un message test");
+
+    afficherJeu();
+    printf("Nouvelle partie, à vous de jouer !\n");
+
+    dernierCoupUser = jouerCoupUser();
+
+    afficherJeu();
+    if (grilleOrdi[dernierCoupUser] == 2) {
+        verdict = "réussi";
+        coupsUser++;
+    } else {
+        verdict = "manqué";
+    }
+    printf("Vous avez tiré sur %s : coup %s !\n", caseToLisible(dernierCoupUser), verdict);
+
+    dernierCoupOrdi = jouerCoupOrdi();
+
+    afficherJeu();
+    if (grilleUser[dernierCoupOrdi] == 2) {
+        verdict = "réussi";
+        coupsOrdi++;
+    } else {
+        verdict = "manqué";
+    }
+    printf("L'ordinateur à tiré sur %s : coup %s !\n", caseToLisible(dernierCoupOrdi), verdict);
+
     // libérer la mémoire des grilles
-    placeBateaux (grilleOrdi);
-    placeBateaux (grilleUser);
-    afficherJeu("Voici un message test");
-    coupJoueur ();
-    afficherJeu("Voici un message test");
-    coupJoueur ();
-    afficherJeu("Voici un message test");
     free(grilleOrdi);
     free(grilleUser);
 
