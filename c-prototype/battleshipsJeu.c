@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include "battleshipsJeu.h"
+#include "battleshipsIO.h"
 #include "main.h"
 
 // on test pour savoir si le bateau peut être placé et on retourne 1 si ou 0 si non
@@ -52,7 +53,7 @@ void placeBateaux (int *grille)
         // on place aléatoirement le point de départ
         point0 = rand() % (COLS * LIGS - 1);
 
-        // on va controler si le bateau peut être placé, si non on augmente la case de un
+        // on va contrôler si le bateau peut être placé, si non on augmente la case de un
         while (controleDePlacement (point0, orientation, taille_bateau, grille) == 0) {
             if (point0 >= LIGS*COLS - 1)
                 point0 = 0;
@@ -66,7 +67,7 @@ void placeBateaux (int *grille)
     // on place aléatoirement le point de départ
     point0 = rand() % (COLS * LIGS - 1);
 
-    // on va controler si le bateau peut être placé, si non on augmente la case de un
+    // on va contrôler si le bateau peut être placé, si non on augmente la case de un
     while (controleDePlacement (point0, orientation, 3, grille) == 0) {
         if (point0 >= LIGS*COLS - 1)
             point0 = 0;
@@ -93,7 +94,7 @@ void entrezEntier (char message[], int *case_coup)
 
     printf("%s\n", message);
     fgets (coup, 5, stdin);
-    // on vide l'input pur eviter toute erreur
+    // on vide l'input pur éviter toute erreur
     if (coup[strlen (coup) - 1] != '\n')
         vide_input();
     // on a alors un chiffre compris entre 1 et 9
@@ -222,5 +223,47 @@ void initJeu (void)
     // placement des bateaux des joueurs
     placeBateaux(grilleOrdi);
     placeBateaux(grilleUser);
+}
+
+void jouerBattaille (void)
+{
+    initJeu();
+    char *verdict = malloc(7 * sizeof(char));
+
+    afficherJeu();
+    printf("Nouvelle partie, à vous de jouer !\n");
+
+    while (coupsOrdi < MAX_COUPS && coupsUser < MAX_COUPS) {
+
+        printf("Joueur : %d | Ordinateur : %d\n", coupsUser, coupsOrdi);
+
+        dernierCoupUser = jouerCoupUser();
+
+        afficherJeu();
+        if (grilleOrdi[dernierCoupUser] == 2) {
+            verdict = "réussi";
+            coupsUser++;
+        } else {
+            verdict = "manqué";
+        }
+        printf("Vous avez tiré sur %s : coup %s !\n", caseToLisible(dernierCoupUser), verdict);
+
+        dernierCoupOrdi = jouerCoupOrdi();
+
+        afficherJeu();
+        if (grilleUser[dernierCoupOrdi] == 2) {
+            verdict = "réussi";
+            coupsOrdi++;
+        } else {
+            verdict = "manqué";
+        }
+        printf("L'ordinateur à tiré sur %s : coup %s !\n", caseToLisible(dernierCoupOrdi), verdict);
+    }
+
+    if (coupsOrdi == MAX_COUPS) {
+        printf("L'ordinateur a gagné !\n");
+    } else {
+        printf("Le joueur a gagné !\n");
+    }
 }
 

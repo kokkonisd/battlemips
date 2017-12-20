@@ -14,4 +14,4 @@ battleships : $(OBJECTS)
 %.c : %.h
 
 clean :
-	rm -f battleships
+	rm -f battleships *.o

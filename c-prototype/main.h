@@ -3,6 +3,7 @@
 
 #define LIGS 10
 #define COLS 10
+#define MAX_COUPS 17
 
 extern int *grilleUser;
 extern int *grilleOrdi;
