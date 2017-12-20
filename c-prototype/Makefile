@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -std=c99
 OBJECTS = main.o battleshipsJeu.o battleshipsIO.o
 
 all : battleships
