@@ -44,7 +44,7 @@ Choix possibles :
     o - Coup manqué ([o])
 
 
-FONCTIONS JEU :
+FONCTIONS JEU : [DONE]
 
 void initJeu (void) : initialiser le jeu. Remplir les deux grilles par des 0, effectuer un reset sur les variables coupsOrdi, coupsUser, dernierCoupOrdi. [DONE]
 
@@ -54,7 +54,7 @@ int jouerCoupOrdi (void) : jouer un coup d'ordinateur. Si le dernier coup (varia
 
 void placementBateaux (int *grille) : placer les 5 bateaux (de tailles 5, 4, 3, 3, 2) au hasard dans la grille. Pour chaque bateau, on doit avoir une choix au hasard qui va déterminer si le bateau va être placé horizontalement ou verticalement, et une autre choix au hasard qui va déterminer ou va être placé le bateau (en respectant sa taille, ainsi que la place dans la grille occupée par les autres bateaux). [DONE]
 
-void jouerBataille (void) : jouer une partie de bataille navale. Doit effectuer une initialisation du jeu, puis, à chaque tour, un coup d'utilisateur, puis un coup d'ordinateur, puis un affichage de la grille avec les résultats des deux coups. L'affichage va s'effectuer tout en haut de la boucle principale du jeu, pour deux raisons : 1. parce que le jeu doit commencer avec un affichage afin que l'utilisateur sache où sont placés ses bateaux et 2. parce que, dès qu'il y a un coup gagnant, on veut sortir de la boucle et afficher un message spécial ("X a gagné !"). La condition de la boucle va être donc : (coupsUser < MAX_COUPS && coupsOrdi < MAX_COUPS)
+void jouerBataille (void) : jouer une partie de bataille navale. Doit effectuer une initialisation du jeu, puis, à chaque tour, un coup d'utilisateur, puis un coup d'ordinateur, puis un affichage de la grille avec les résultats des deux coups. L'affichage va s'effectuer tout en haut de la boucle principale du jeu, pour deux raisons : 1. parce que le jeu doit commencer avec un affichage afin que l'utilisateur sache où sont placés ses bateaux et 2. parce que, dès qu'il y a un coup gagnant, on veut sortir de la boucle et afficher un message spécial ("X a gagné !"). La condition de la boucle va être donc : (coupsUser < MAX_COUPS && coupsOrdi < MAX_COUPS) [DONE]
 
 
 FONCTIONS MENU :
