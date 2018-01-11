@@ -51,6 +51,9 @@ chaineAffichage3: .asciiz "              ------               |             ----
 chaineAffichage4: .asciiz "    A  B  C  D  E  F  G  H  I  J   |      A  B  C  D  E  F  G  H  I  J \n"
 chaineBarriere: .asciiz "  |  "
 
+# fonctions globales
+.globl fctAfficherJeu
+
 .text
 j main		 
 
@@ -250,6 +253,7 @@ fctAfficherJeu: # ARGUMENTS : -
 	jr $ra
 		
 
+# pour tester
 main:
 	jal fctAfficherJeu
 	ori $v0, $0, 10
