@@ -6,12 +6,17 @@ MSGERRF:	.asciiz "Erreur dans le format, respectez xy avec A <= x <= J et 1 <= y
 MSGENTC:	.asciiz "Entrez la case à jouer en respectant le format xy avec A <= x <= J et 1 <= y <= 10"
 MSGTOUCHE:	.asciiz "Vous avez tiré sur une case déjà touchée, reessayez"
 CASEUSR:	.asciiz "    "
+
+# fonctions globales
+.globl placeBateaux
+.globl jouerCoupUser
+
 	.text
 main:
 	la $a0, GRILLECPU
 	jal placeBateaux
-	jal joueCoupUser
-	jal joueCoupUser
+	jal jouerCoupUser
+	jal jouerCoupUser
 	ori $v0, $0, 10
 	syscall
 #####################################################################
@@ -282,7 +287,7 @@ erreur_if_entrezCoup3:
 ####################################################################################
 ####################################################################################
 ####################################################################################
-joueCoupUser:			#on joue le coup de l'utilisateur, et on asigne les valeures à la grille CPU selon si le coup est réussi ou manqué
+jouerCoupUser:			#on joue le coup de l'utilisateur, et on asigne les valeures à la grille CPU selon si le coup est réussi ou manqué
 	addiu $sp, $sp, -8	#PRO
 	sw $ra, ($sp)		#PRO
 	sw $fp, 4($sp)		#PRO
@@ -293,24 +298,24 @@ joueCoupUser:			#on joue le coup de l'utilisateur, et on asigne les valeures à 
 	sll $v0, $v0, 2		#$v0 = 4*$v0 car on manipule des word
 	add $t0, $t0, $v0	#$t0 = adresse de GRILLECPU[coup joué], ceci nous sert à faire les modifications
 	lw $t1, ($t0)		#$t1 = GRILLECPU[coup joué]
-do_joueCoupUser:		#on effectue le tir tant que on a tiré sur une case déjà touchée
-	beq $t1, 0, coupManque_joueCoupUser	#le coup est manqué, on touche pas de bateau
-	beq $t1, 1, coupReussi_joueCoupUser	#le coup est réussi, on touche un bateau
+do_jouerCoupUser:		#on effectue le tir tant que on a tiré sur une case déjà touchée
+	beq $t1, 0, coupManque_jouerCoupUser	#le coup est manqué, on touche pas de bateau
+	beq $t1, 1, coupReussi_jouerCoupUser	#le coup est réussi, on touche un bateau
 	la $a0, MSGTOUCHE	#on envoi un nouveau message à enter
 	jal entrezCoup
 	la $t0, GRILLECPU	#ceci nous servira a tester les valeurs des coups pour savoir s'il est réussi ou manqué, ainsi que a changer les valeurs des cases touchées
 	sll $v0, $v0, 2		#$v0 = 4*$v0 car on manipule des word
 	add $t0, $t0, $v0	#$t0 = adresse de GRILLECPU[coup joué], ceci nous sert à faire les modifications
 	lw $t1, ($t0)		#$t1 = GRILLECPU[coup joué]
-	j do_joueCoupUser	#on boucle car on avais raté
-coupReussi_joueCoupUser:
+	j do_jouerCoupUser	#on boucle car on avais raté
+coupReussi_jouerCoupUser:
 	ori $t1, $0, 2		#le code du coup réussi
 	sb $t1, ($t0)		#on met cette valeur dans le tableau
 	lw $ra, ($sp)		#PRO
 	lw $fp, 4($sp)		#PRO
 	addiu $sp, $sp, 8	#PRO
 	jr $ra
-coupManque_joueCoupUser:
+coupManque_jouerCoupUser:
 	ori $t1, $0, 3		#le code du coup manqué
 	sb $t1, ($t0)		#on met cette valeur dans le tableau
 	lw $ra, ($sp)		#PRO

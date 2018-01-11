@@ -41,6 +41,9 @@ grilleOrdi: .space 400
 
 jal main
 
+fctJouerCoupOrdi: # ARGUMENTS : -
+    
+        
 
 main:
     # tester la fonction jouerCoupOrdi
