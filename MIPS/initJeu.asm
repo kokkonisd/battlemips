@@ -45,6 +45,8 @@ dernierCoupOrdi: .word 0
 
 .text
 
+j main
+
 initJeu:
 	# prologue
 	pro_t
@@ -106,10 +108,16 @@ initJeu:
 	la $t1, dernierCoupOrdi
 	sw $t0, 0($t1)
 
-	# appel des fonctions placementBateaux
-	
+	# appel des fonctions placeBateaux
+	la $a0, grilleUser
+	jal placeBateaux
+	la $a0, grilleOrdi
+	jal placeBateaux
 	
 	# epilogue
 	epi_t
 	
 	jr $ra
+	
+main:
+	jal initJeu
