@@ -53,11 +53,17 @@ fctJouerCoupOrdi: # ARGUMENTS : -
 
     # t0 = @grilleUser
     la $t0, grilleUser
+    # décalage mémoire à cause des .extern
+    addi $t0, $t0, 65536
     # t1 = dernierCoupOrdi
     la $t1, dernierCoupOrdi
+    # décalage mémoire à cause des .extern
+    addi $t1, $t1, 65536
     lw $t1, 0($t1)
     # t2 = coupsOrdi
     la $t2, coupsOrdi
+    # décalage mémoire à cause des .extern
+    addi $t2, $t2, 65536
     lw $t2, 0($t2)
 
     # if (grilleUser[dernierCoupOrdi] == 3 || coupsOrdi == 0)
@@ -77,6 +83,8 @@ fctJouerCoupOrdi: # ARGUMENTS : -
 
         # t4 = coupsOrdi
         la $t4, coupsOrdi
+        # décalage mémoire à cause des .extern
+        addi $t4, $t4, 65536
         lw $t4, 0($t4)
 
         # coupsOrdi == 0
@@ -94,8 +102,12 @@ fctJouerCoupOrdi: # ARGUMENTS : -
             ori $a0, $0, 0
             # a1 = max = LIGS * COLS
             la $a1, LIGS
+            # décalage mémoire à cause des .extern
+            addi $a1, $a1, 65536
             lw $a1, 0($a1)
             la $a2, COLS
+            # décalage mémoire à cause des .extern
+            addi $a2, $a2, 65536
             lw $a2, 0($a2)
             mult $a1, $a2
             mflo $a1
@@ -138,6 +150,8 @@ fctJouerCoupOrdi: # ARGUMENTS : -
         addi $t3, $t1, 1
         # t4 = COLS
         la $t4, COLS
+        # décalage mémoire à cause des .extern
+        addi $t4, $t4, 65536
         lw $t4, 0($t4)
         # t3 = (dernierCoupOrdi + 1) % COLS
         div $t3, $t4
@@ -161,6 +175,8 @@ fctJouerCoupOrdi: # ARGUMENTS : -
 
         # t5 = LIGS
         la $t5, LIGS
+        # décalage mémoire à cause des .extern
+        addi $t5, $t5, 65536
         lw $t5, 0($t5)
         # t5 = COLS * LIGS
         mult $t4, $t5
@@ -227,9 +243,13 @@ fctJouerCoupOrdi: # ARGUMENTS : -
 
                 # t7 = dernierCoupOrdi
                 la $t7, dernierCoupOrdi
+                # décalage mémoire à cause des .extern
+                addi $t7, $t7, 65536
                 lw $t7, 0($t7)
                 # t3 = COLS
                 la $t3, COLS
+                # décalage mémoire à cause des .extern
+                addi $t3, $t3, 65536
                 lw $t3, 0($t3)
 
                 case0: # droite
@@ -283,6 +303,8 @@ fctJouerCoupOrdi: # ARGUMENTS : -
 
     # t6 = @grilleUser
     la $t6, grilleUser
+    # décalage mémoire à cause des .extern
+    addi $t6, $t6, 65536
     # t5 = 4
     ori $t5, $0, 4
     # t7 = t7 * 4 = hit * 4

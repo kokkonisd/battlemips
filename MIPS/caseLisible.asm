@@ -58,6 +58,8 @@ fctCaseLisible: # ARGUMENTS: $a0 = numéro de la case (entre 0 et 100 inclus)
     # t0 = ligne, t1 = colonne
     # d'abord on charge COLS dans t0
     la $t0, COLS
+    # décalage mémoire à cause des .extern
+    addi $t0, $t0, 65536
     lw $t0, 0($t0)
     
     # puis on fait ligne = numéro_case / COLS

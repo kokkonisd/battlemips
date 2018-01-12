@@ -54,8 +54,12 @@ fctInitJeu:
 	
 	# charger LIGS dans t1, COLS dans t2
 	la $t1, LIGS
+	# décalage mémoire à cause des .extern
+	addi $t1, $t1, 65536
 	lw $t1, 0($t1)
 	la $t2, COLS
+	# décalage mémoire à cause des .extern
+	addi $t2, $t2, 65536
 	lw $t2, 0($t2)
 	
 	# stocket LIGS * COLS dans t1
@@ -73,6 +77,8 @@ fctInitJeu:
 		ori $t4, $0, 0
 		# charger l'addresse de grilleUser
 		la $t5, grilleUser
+		# décalage mémoire à cause des .extern
+		addi $t5, $t5, 65536
 		# t5 = @grilleUser + 4 * i = grilleUser[i]
 		add $t5, $t5, $t3
 		# grilleUser[i] = 0
@@ -80,6 +86,8 @@ fctInitJeu:
 		
 		# charger l'addresse de grilleOrdi
 		la $t5, grilleOrdi
+		# décalage mémoire à cause des .extern
+		addi $t5, $t5, 65536
 		# t5 = @grilleOrdi + 4 * i = grilleOrdi[i]
 		add $t5, $t5, $t3
 		# grilleOrdi[i] = 0
@@ -95,21 +103,33 @@ fctInitJeu:
 	# inialisation des variables globaux
 	ori $t0, $0, 0
 	la $t1, coupsUser
+	# décalage mémoire à cause des .extern
+	addi $t1, $t1, 65536
 	sw $t0, 0($t1)
 
 	la $t1, coupsOrdi
+	# décalage mémoire à cause des .extern
+	addi $t1, $t1, 65536
 	sw $t0, 0($t1)
 
 	la $t1, dernierCoupUser
+	# décalage mémoire à cause des .extern
+	addi $t1, $t1, 65536
 	sw $t0, 0($t1)
 
 	la $t1, dernierCoupOrdi
+	# décalage mémoire à cause des .extern
+	addi $t1, $t1, 65536
 	sw $t0, 0($t1)
 
 	# appel des fonctions placeBateaux
 	la $a0, grilleUser
+	# décalage mémoire à cause des .extern
+	addi $a0, $a0, 65536
 	jal placeBateaux
 	la $a0, grilleOrdi
+	# décalage mémoire à cause des .extern
+	addi $a0, $a0, 65536
 	jal placeBateaux
 	
 	# epilogue

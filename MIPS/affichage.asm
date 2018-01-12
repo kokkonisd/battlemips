@@ -118,14 +118,17 @@ fctAfficherJeu: # ARGUMENTS : -
 	ori $t1, $0, 0
 	# variable-comparateur
 	ori $t2, $0, 10
-	# variable-fin-de-boucle (t3)
+	# variable-fin-de-boucle (t3) = LIGS * COLS
 	la $t3, LIGS
+	# décalage mémoire à cause des .extern
+	addi $t3, $t3, 65536
 	la $t4, COLS
+	# décalage mémoire à cause des .extern
+	addi $t4, $t4, 65536
+
 	lw $t3, 0($t3)
 	lw $t4, 0($t4)
-	or $a0, $0, $t3
-	ori $v0, $0, 1
-	syscall
+
 	mult $t3, $t4
 	mflo $t3
 	
@@ -150,10 +153,15 @@ fctAfficherJeu: # ARGUMENTS : -
 		ori $t4, $0, 0
 		# condition fin de boucle
 		la $t5, COLS
+		# décalage mémoire à cause des .extern
+		addi $t5, $t5, 65536
+
 		lw $t5, 0($t5)
 		for_affichage_interieur1:
 			# préparation pour l'appel de fctAfficherCase
 			la $a0, grilleUser
+			# décalage mémoire à cause des .extern
+			addi $a0, $a0, 65536
 			# ajouter i * 4 à l'addresse
 			ori $t6, $0, 4
 			mult $t6, $t1
@@ -167,6 +175,7 @@ fctAfficherJeu: # ARGUMENTS : -
 			
 			# charger la case
 			lw $a0, 0($a0)
+			# mode utilisateur
 			ori $a1, $0, 0
 			
 			jal fctAfficherCase
@@ -202,10 +211,14 @@ fctAfficherJeu: # ARGUMENTS : -
 		ori $t4, $0, 0
 		# condition fin de boucle
 		la $t5, COLS
+		# décalage mémoire à cause des .extern
+		addi $t5, $t5, 65536
 		lw $t5, 0($t5)
 		for_affichage_interieur2:
     		# préparation pour l'appel de fctAfficherCase
     		la $a0, grilleOrdi
+    		# décalage mémoire à cause des .extern
+			addi $a0, $a0, 65536
     		# ajouter i * 4 à l'addresse
     		ori $t6, $0, 4
     		mult $t6, $t1
@@ -219,7 +232,8 @@ fctAfficherJeu: # ARGUMENTS : -
     
     		# charger la case
     		lw $a0, 0($a0)
-    		ori $a1, $0, 0
+    		# mode ordinateur
+    		ori $a1, $0, 1
     
     		jal fctAfficherCase
     
@@ -238,6 +252,8 @@ fctAfficherJeu: # ARGUMENTS : -
 		addi $t0, $t0, 1
 		# t1 += COLS (i += COLS)
 		la $t4, COLS
+		# décalage mémoire à cause des .extern
+		addi $t4, $t4, 65536
 		lw $t4, 0($t4)
 		add $t1, $t1, $t4
 		
