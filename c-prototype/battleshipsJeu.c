@@ -164,7 +164,7 @@ int jouerCoupOrdi (void)
         } else if ((dernierCoupOrdi - COLS) < 0) {
             // la case est sur la frontière haute de la grille
             hit = dernierCoupOrdi + COLS; // tirer en bas
-        } else if (dernierCoupOrdi % COLS) {
+        } else if ((dernierCoupOrdi % COLS) == 0) {
             // la case est sur la frontière gauche de la grille
             hit = dernierCoupOrdi + 1; // tirer à droite
         } else if ((dernierCoupOrdi + COLS) > COLS * LIGS) {

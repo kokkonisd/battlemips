@@ -2,7 +2,7 @@
 .globl random
 .text
 
-random:
+random: # ARGUMENTS : a0 = min, a1 = max
 	
 	addiu $sp, $sp -40 #PRO on ajuste $sp
     sw $ra, 0($sp)     #PRO on sauvegarde $ra
