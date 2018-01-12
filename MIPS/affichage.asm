@@ -251,6 +251,7 @@ fctAfficherJeu: # ARGUMENTS : -
 		
 
 main:
+
 	jal fctAfficherJeu
 	ori $v0, $0, 10
 	syscall
