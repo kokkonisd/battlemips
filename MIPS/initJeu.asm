@@ -35,11 +35,17 @@ LIGS: .word 10
 COLS: .word 10
 grilleUser: .space 400
 grilleOrdi: .space 400
+coupsUser: .word 0
+coupsOrdi: .word 0
+dernierCoupUser: .word 0
+dernierCoupOrdi: .word 0
 
 # la fonction est globale
 .globl initJeu
 
 .text
+
+j main
 
 initJeu:
 	# prologue
@@ -87,8 +93,31 @@ initJeu:
 		# condition i < LIGS * COLS 
 		blt $t0, $t1, for_initialisation
 	fin_for_initialisation:
+
+	# inialisation des variables globaux
+	ori $t0, $0, 0
+	la $t1, coupsUser
+	sw $t0, 0($t1)
+
+	la $t1, coupsOrdi
+	sw $t0, 0($t1)
+
+	la $t1, dernierCoupUser
+	sw $t0, 0($t1)
+
+	la $t1, dernierCoupOrdi
+	sw $t0, 0($t1)
+
+	# appel des fonctions placeBateaux
+	la $a0, grilleUser
+	jal placeBateaux
+	la $a0, grilleOrdi
+	jal placeBateaux
 	
 	# epilogue
 	epi_t
 	
 	jr $ra
+	
+main:
+	jal initJeu

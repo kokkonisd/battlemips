@@ -152,7 +152,7 @@ int jouerCoupOrdi (void)
         // dernier coup pas réussi
         // trouver une case pas déjà touchée
         do {
-            hit = rand() % (LIGS * COLS);
+            hit = rand() % (LIGS * COLS); // max = LIGS*COLS, min = 0
         } while (grilleUser[hit] == 2 || grilleUser[hit] == 3);
     } else {
         // dernier coup réussi
@@ -164,7 +164,7 @@ int jouerCoupOrdi (void)
         } else if ((dernierCoupOrdi - COLS) < 0) {
             // la case est sur la frontière haute de la grille
             hit = dernierCoupOrdi + COLS; // tirer en bas
-        } else if (dernierCoupOrdi % COLS) {
+        } else if ((dernierCoupOrdi % COLS) == 0) {
             // la case est sur la frontière gauche de la grille
             hit = dernierCoupOrdi + 1; // tirer à droite
         } else if ((dernierCoupOrdi + COLS) > COLS * LIGS) {
@@ -175,6 +175,7 @@ int jouerCoupOrdi (void)
             do {
                 // choisir une direction au hasard
                 r = rand() % 4; // rand() % (max - min + 1) + min
+                    // ici: max = 3, min = 0
 
                 switch (r) {
                     case 0: // droite
