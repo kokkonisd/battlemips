@@ -31,10 +31,10 @@ addiu $sp, $sp, 40 #EPI on ajuste $sp
 .end_macro
 
 # variables globaux, déclarées ici temporairement
-LIGS: .word 10
-COLS: .word 10
-grilleUser: .space 400
-grilleOrdi: .space 400
+#LIGS: .word 10
+#COLS: .word 10
+#grilleUser: .space 400
+#grilleOrdi: .space 400
 
 # chaine pour afficher le numéro de la case
 resultat: .space 4 
@@ -45,9 +45,10 @@ resultat: .space 4
 # tableaux pour les deux switchs
 switch_tab1: .word FLAG_A, FLAG_B, FLAG_C, FLAG_D, FLAG_E, FLAG_F, FLAG_G, FLAG_H, FLAG_I, FLAG_J
 switch_tab2: .word FLAG_1, FLAG_2, FLAG_3, FLAG_4, FLAG_5, FLAG_6, FLAG_7, FLAG_8, FLAG_9, FLAG_10
-.text
 
-j main
+.globl fctCaseLisible
+
+.text
 
 fctCaseLisible: # ARGUMENTS: $a0 = numéro de la case (entre 0 et 100 inclus)
     pro_t
@@ -178,13 +179,3 @@ fctCaseLisible: # ARGUMENTS: $a0 = numéro de la case (entre 0 et 100 inclus)
     epi_t
     
     jr $ra
-    
-main:
-    ori $a0, $0, 99
-    jal fctCaseLisible
-    or $a0, $0, $v0
-    ori $v0, $0, 4
-    syscall
-    
-    ori $v0, $0, 10
-    syscall

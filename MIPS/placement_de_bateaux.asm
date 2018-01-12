@@ -1,5 +1,5 @@
 	.data
-<<<<<<< HEAD
+#<<<<<<< HEAD
 	# macros
 # macro pour le prologue (avec sauvegarde des variables t)
 	.macro pro_t
@@ -31,11 +31,11 @@ lw $t7, 36($sp)    #EPI on charge t7
 addiu $sp, $sp, 40 #EPI on ajuste $sp
 	.end_macro
 #variables internes
-LIGS: .word 10
-COLS: .word 10
+#LIGS: .word 10
+#OLS: .word 10
 
 .globl placeBateaux
-=======
+#=======
 COLS:		.word 10
 LIGS:		.word 10
 GRILLECPU:	.word 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -45,19 +45,19 @@ MSGTOUCHE:	.asciiz "Vous avez tiré sur une case déjà touchée, reessayez"
 CASEUSR:	.asciiz "    "
 
 # fonctions globales
-.globl placeBateaux
+#.globl placeBateaux
 .globl jouerCoupUser
 
->>>>>>> 208e6363a58169d71a1c04a039a494d22d2ead01
+#>>>>>>> 208e6363a58169d71a1c04a039a494d22d2ead01
 	.text
 main:
 	la $a0, grilleOrdi
 	jal placeBateaux
-<<<<<<< HEAD
-=======
+#<<<<<<< HEAD
+#=======
 	jal jouerCoupUser
 	jal jouerCoupUser
->>>>>>> 208e6363a58169d71a1c04a039a494d22d2ead01
+#>>>>>>> 208e6363a58169d71a1c04a039a494d22d2ead01
 	ori $v0, $0, 10
 	syscall
 #####################################################################
@@ -215,10 +215,10 @@ else_while_for_placeBateaux3:
 	j while_for_placeBateaux3
 suite_while_for_placeBateaux3:
 	jal creeBateau		#comme on a fais en sorte que les variables d'entrée soient les mêmes pour les 2 fonctions, on peut appeller directement la foncion	
-<<<<<<< HEAD
+#<<<<<<< HEAD
 	epi_t
 	jr $ra
-=======
+#=======
 	lw $ra, ($sp)		#PRO
 	lw $fp, 4($sp)		#PRO
 	addiu $sp, $sp, 12	#PRO
@@ -353,4 +353,4 @@ coupManque_jouerCoupUser:
 
 
 
->>>>>>> 208e6363a58169d71a1c04a039a494d22d2ead01
+#>>>>>>> 208e6363a58169d71a1c04a039a494d22d2ead01

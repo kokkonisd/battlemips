@@ -31,10 +31,10 @@ addiu $sp, $sp, 40 #EPI on ajuste $sp
 .end_macro
 
 # variables globaux, déclarées ici temporairement
-LIGS: .word 10
-COLS: .word 10
-grilleUser: .space 400
-grilleOrdi: .space 400
+#LIGS: .word 10
+#COLS: .word 10
+#grilleUser: .space 400
+#grilleOrdi: .space 400
 
 # variables pour fctAfficherCase
 switch_tab: .word CASE0, CASE1, CASE2, CASE3, DEFAULT
@@ -54,8 +54,7 @@ chaineBarriere: .asciiz "  |  "
 # fonctions globales
 .globl fctAfficherJeu
 
-.text
-j main		 
+.text	 
 
 fctAfficherCase: # ARGUMENTS : a0=contenu, a1=joueur
 	pro_t
@@ -124,6 +123,9 @@ fctAfficherJeu: # ARGUMENTS : -
 	la $t4, COLS
 	lw $t3, 0($t3)
 	lw $t4, 0($t4)
+	or $a0, $0, $t3
+	ori $v0, $0, 1
+	syscall
 	mult $t3, $t4
 	mflo $t3
 	
@@ -251,11 +253,3 @@ fctAfficherJeu: # ARGUMENTS : -
 	epi_t
 	
 	jr $ra
-		
-
-# pour tester
-main:
-
-	jal fctAfficherJeu
-	ori $v0, $0, 10
-	syscall

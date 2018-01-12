@@ -29,12 +29,12 @@ lw $t6, 32($sp)    #EPI on charge t6
 lw $t7, 36($sp)    #EPI on charge t7
 addiu $sp, $sp, 40 #EPI on ajuste $sp
 	.end_macro
+#variables externes
+#.extern grilleUser 400
+#.extern grilleOrdi 400
 #variables internes
-.extern grilleUser 400
-.extern grilleOrdi 400
-#variables internes
-LIGS: .word 10
-COLS: .word 10
+#LIGS: .word 10
+#COLS: .word 10
 MSGERRF:	.asciiz "Erreur dans le format, respectez xy avec A <= x <= J et 1 <= y <= 10"
 MSGENTC:	.asciiz "Entrez la case à jouer en respectant le format xy avec A <= x <= J et 1 <= y <= 10"
 MSGTOUCHE:	.asciiz "Vous avez tiré sur une case déjà touchée, reessayez"

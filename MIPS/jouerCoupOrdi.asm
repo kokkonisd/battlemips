@@ -32,17 +32,19 @@ addiu $sp, $sp, 40 #EPI on ajuste $sp
 .end_macro
 
 # variables globaux, déclarées ici temporairement
-LIGS: .word 10
-COLS: .word 10
-grilleUser: .space 400
-grilleOrdi: .space 400
-coupsUser: .word 0
-coupsOrdi: .word 0
-dernierCoupUser: .word 0
-dernierCoupOrdi: .word 0
+#LIGS: .word 10
+#COLS: .word 10
+#grilleUser: .space 400
+#grilleOrdi: .space 400
+#coupsUser: .word 0
+#coupsOrdi: .word 0
+#dernierCoupUser: .word 0
+#dernierCoupOrdi: .word 0
 
 # tableau pour les étiquettes du switch
 switch_tab: .word case0, case1, case2, case3
+
+.globl fctJouerCoupOrdi
 
 .text
 
