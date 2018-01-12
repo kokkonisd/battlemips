@@ -41,13 +41,13 @@ dernierCoupUser: .word 0
 dernierCoupOrdi: .word 0
 
 # la fonction est globale
-.globl initJeu
+.globl fctInitJeu
 
 .text
 
 j main
 
-initJeu:
+fctInitJeu:
 	# prologue
 	pro_t
 	
