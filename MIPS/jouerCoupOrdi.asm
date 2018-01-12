@@ -207,7 +207,7 @@ fctJouerCoupOrdi: # ARGUMENTS : -
             # la case est à l'intérieur de la grille
             do_while_directions:
                 # choisir une direction au hasard
-                # préparation pour l'appel de random
+                # préparation pour l'appel de random()
                 # a0 = min = 0, a1 = max = 3
                 ori $a0, $0, 0
                 ori $a1, $0, 3
