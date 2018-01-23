@@ -37,7 +37,7 @@ addiu $sp, $sp, 40 #EPI on ajuste $sp
 #grilleOrdi: .space 400
 
 # variables pour fctAfficherCase
-switch_tab: .word CASE0, CASE1, CASE2, CASE3, DEFAULT
+switch_tab: .word CASE0, CASE1, CASE2, CASE3
 case_vide: .asciiz "[ ]"
 case_bateau: .asciiz "[B]"
 case_manque: .asciiz "[o]"
@@ -59,16 +59,22 @@ chaineBarriere: .asciiz "  |  "
 fctAfficherCase: # ARGUMENTS : a0=contenu, a1=joueur
 	pro_t
 	
+	# setup pour l'affichage des cases
 	ori $v0, $0, 4
+	# valeur du switch à comparer
 	ori $t0, $0, 3
+	# saut au DEFAULT si le contenu > 3
 	bgt $a0, $t0, DEFAULT
+	# t0 = a0 = contenu de la case
 	or $t0, $0, $a0
-	switch: sll $t0, $t0, 2
+	switch: 
+		sll $t0, $t0, 2
 		la $t1, switch_tab
 		add $t2, $t0, $t1
 		lw $t2, 0($t2)
 		jr $t2
-	CASE0:	la $a0, case_vide
+	CASE0:
+		la $a0, case_vide
 		syscall
 		j switch_suite
 	CASE1:
