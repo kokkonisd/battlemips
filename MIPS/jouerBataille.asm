@@ -79,7 +79,7 @@ chaineOrdiGagne: .asciiz "L'ordinateur a gagné !\n"
 chaineUserGagne: .asciiz "Le joueur a gagné !\n"
 
 .text
-
+ 
 j main
 
 fctJouerBataille:

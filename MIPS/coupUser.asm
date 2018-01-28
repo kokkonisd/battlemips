@@ -43,9 +43,6 @@ CASEUSR:	.asciiz "    "
 ###############################################################################################################
 ###############################################################################################################
 ###############################################################################################################
-jal joueCoupUser
-ori $v0, $0, 10
-syscall
 
 entrezCoup:			#Elle renvoi un message en fonction de la ligne tappé par l'utilisateur désignant la case jouée $a0 = adresse message, elle renvoi l'adresse de la case en int
 	pro_t
@@ -138,11 +135,11 @@ do_joueCoupUser:		#on effectue le tir tant que on a tiré sur une case déjà to
 	j do_joueCoupUser	#on boucle car on avais raté
 coupReussi_joueCoupUser:
 	ori $t1, $0, 2		#le code du coup réussi
-	sb $t1, ($t0)		#on met cette valeur dans le tableau
+	sw $t1, ($t0)		#on met cette valeur dans le tableau
 	epi_t
 	jr $ra
 coupManque_joueCoupUser:
 	ori $t1, $0, 3		#le code du coup manqué
-	sb $t1, ($t0)		#on met cette valeur dans le tableau
+	sw $t1, ($t0)		#on met cette valeur dans le tableau
 	epi_t
 	jr $ra
