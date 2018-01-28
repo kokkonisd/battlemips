@@ -33,8 +33,6 @@ addiu $sp, $sp, 40 #EPI on ajuste $sp
 .extern grilleOrdi 400
 .extern COLS 4
 #variables internes
-grilleOrdi: .space 400
-COLS: .word 10
 MSGERRF:	.asciiz "Erreur dans le format, respectez xy avec A <= x <= J et 1 <= y <= 10"
 MSGENTC:	.asciiz "Entrez la case à jouer en respectant le format xy avec A <= x <= J et 1 <= y <= 10"
 MSGTOUCHE:	.asciiz "Vous avez tiré sur une case déjà touchée, reessayez"
@@ -81,8 +79,9 @@ if_entrezCoup2:
 	ori $t1, $0, 57		#besoin pour le test suivant car pas de bht 
 	blt $t1, $t2, erreur_if_entrezCoup2	#si 57 < message[1] alors il n'est pas compris entre 1 et 9, erreur
 	addi $v0, $t2, -49	#v0 = (int) message[1]
-	lw $t3, COLS 		#on en a besoin pour les lignes
-	addi $t3, $t3, 0x10000	#car dans le .extern
+	la $t3, COLS	 	#on en a besoin pour les lignes
+	addi $t3, $t3, 0x10000
+	lw $t3, ($t3)
 	mult $v0, $t3		#on fait message[1]*COLS pour obtenir la case correspondante à la ligne
 	mflo $v0		#$v0 = ((int) message[1])*COLS
 	add $v0, $v0, $t0	#$v0 = ((int) message[i])*COLS + message[0]
@@ -102,8 +101,9 @@ if_entrezCoup3:
 	lb $t3 2($a0)		#on veut maintenant controler le deuxième chiffre
 	bne $t3, 48, erreur_if_entrezCoup3	#si message[2] != 48 alors ce n'est pas un 0, erreur
 	ori $t1, $0, 9		#on a obligatoirement un 10 du coup on fait 9*COLS pour obtenir l'indice du premier entier de la derniere file
-	lw $t2, COLS
+	la $t2, COLS
 	addi $t2, $t2, 0x10000
+	lw $t2, ($t2)
 	mult $t1, $t2
 	mflo $v0		#$v0 = 9*COLS
 	add $v0, $v0, $t0	#$v0 = 9*COLS + message[0]
