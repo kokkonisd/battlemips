@@ -148,6 +148,10 @@ fctJouerBataille:
         # le dernierCoupUser est multiplié par 4, on corrige ça
         srl $t3, $t3, 2
 
+        # on sauvegarde dernierCoupUser
+        la $a0, dernierCoupUser
+        sw $t3, 0($a0)
+
 
         # afficherJeu()
         jal fctAfficherJeu
@@ -223,6 +227,9 @@ fctJouerBataille:
 
         # t3 = dernierCoupOrdi = jouerCoupOrdi();
         or $t3, $0, $v0
+        # on sauvegarde dernierCoupOrdi
+        la $a0, dernierCoupOrdi
+        sw $t3, 0($a0)
 
         # afficherJeu()
         jal fctAfficherJeu

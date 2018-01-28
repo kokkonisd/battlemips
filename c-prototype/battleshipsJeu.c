@@ -156,43 +156,43 @@ int jouerCoupOrdi (void)
         } while (grilleUser[hit] == 2 || grilleUser[hit] == 3);
     } else {
         // dernier coup réussi
-        
-        // trouver une case pas déjà touchée, près du dernier coup
-        if ((dernierCoupOrdi + 1) % COLS == 0) {
-            // la case est sur la frontière droite de la grille
-            hit = dernierCoupOrdi - 1; // tirer à gauche
-        } else if ((dernierCoupOrdi - COLS) < 0) {
-            // la case est sur la frontière haute de la grille
-            hit = dernierCoupOrdi + COLS; // tirer en bas
-        } else if ((dernierCoupOrdi % COLS) == 0) {
-            // la case est sur la frontière gauche de la grille
-            hit = dernierCoupOrdi + 1; // tirer à droite
-        } else if ((dernierCoupOrdi + COLS) > COLS * LIGS) {
-            // la case est sur la frontière basse de la grille
-            hit = dernierCoupOrdi - COLS; // tirer en haut
-        } else {
-            // la case est à l'intérieur de la grille
-            do {
-                // choisir une direction au hasard
-                r = rand() % 4; // rand() % (max - min + 1) + min
-                    // ici: max = 3, min = 0
 
-                switch (r) {
-                    case 0: // droite
-                        hit = dernierCoupOrdi + 1;
-                        break;
-                    case 1: // haut
-                        hit = dernierCoupOrdi - COLS;
-                        break;
-                    case 2: // gauche
-                        hit = dernierCoupOrdi - 1;
-                        break;
-                    case 3: // bas
-                        hit = dernierCoupOrdi + COLS;
-                        break;
-                }
-            } while (grilleUser[hit] == 2 || grilleUser[hit] == 3);
-        }
+        do {
+            // trouver une case pas déjà touchée, près du dernier coup
+            if ((dernierCoupOrdi + 1) % COLS == 0) {
+                // la case est sur la frontière droite de la grille
+                hit = dernierCoupOrdi - 1; // tirer à gauche
+            } else if ((dernierCoupOrdi - COLS) < 0) {
+                // la case est sur la frontière haute de la grille
+                hit = dernierCoupOrdi + COLS; // tirer en bas
+            } else if ((dernierCoupOrdi % COLS) == 0) {
+                // la case est sur la frontière gauche de la grille
+                hit = dernierCoupOrdi + 1; // tirer à droite
+            } else if ((dernierCoupOrdi + COLS) > COLS * LIGS) {
+                // la case est sur la frontière basse de la grille
+                hit = dernierCoupOrdi - COLS; // tirer en haut
+            } else {
+                // la case est à l'intérieur de la grille
+                    // choisir une direction au hasard
+                    r = rand() % 4; // rand() % (max - min + 1) + min
+                        // ici: max = 3, min = 0
+
+                    switch (r) {
+                        case 0: // droite
+                            hit = dernierCoupOrdi + 1;
+                            break;
+                        case 1: // haut
+                            hit = dernierCoupOrdi - COLS;
+                            break;
+                        case 2: // gauche
+                            hit = dernierCoupOrdi - 1;
+                            break;
+                        case 3: // bas
+                            hit = dernierCoupOrdi + COLS;
+                            break;
+                    }
+            }
+        } while (grilleUser[hit] == 2 || grilleUser[hit] == 3);
     }
 
     if (grilleUser[hit] == 0) {

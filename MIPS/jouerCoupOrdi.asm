@@ -144,7 +144,11 @@ fctJouerCoupOrdi: # ARGUMENTS : -
         # dernier coup réussi
         # trouver une case pas déjà touchée, près du dernier coup
 
-        # rappel: t1 = dernierCoupOrdi
+        # t1 = dernierCoupOrdi
+        la $t1, dernierCoupOrdi
+        # décalage mémoire à cause des .extern
+        addi $t1, $t1, 65536
+        lw $t1, 0($t1)
 
         # t3 = dernierCoupOrdi + 1
         addi $t3, $t1, 1
@@ -186,7 +190,6 @@ fctJouerCoupOrdi: # ARGUMENTS : -
         # if ((dernierCoupOrdi + COLS) > COLS * LIGS)
         bgt $t3, $t5, if_bas
 
-
         # else
         j else_interieur
 
@@ -208,7 +211,7 @@ fctJouerCoupOrdi: # ARGUMENTS : -
 
         if_gauche:
             # la case est sur la frontière gauche de la grille
-            # hit = t7 = dernierCoupOrdi - 1
+            # hit = t7 = dernierCoupOrdi + 1
             addi $t7, $t1, 1
             # tirer à droite
             j fin_if_interieur
@@ -223,75 +226,81 @@ fctJouerCoupOrdi: # ARGUMENTS : -
 
         else_interieur:
             # la case est à l'intérieur de la grille
-            do_while_directions:
-                # choisir une direction au hasard
-                # préparation pour l'appel de random()
-                # a0 = min = 0, a1 = max = 3
-                ori $a0, $0, 0
-                ori $a1, $0, 3
-                jal random
-                # t6 = v0 = r = résultat du random
-                or $t6, $0, $v0
-
-                # switch
-                switch:
-                    sll $t6, $t6, 2
-                    la $t5, switch_tab
-                    add $t4, $t6, $t5
-                    lw $t4, 0($t4)
-                    jr $t4
-
-                # t7 = dernierCoupOrdi
-                la $t7, dernierCoupOrdi
-                # décalage mémoire à cause des .extern
-                addi $t7, $t7, 65536
-                lw $t7, 0($t7)
-                # t3 = COLS
-                la $t3, COLS
-                # décalage mémoire à cause des .extern
-                addi $t3, $t3, 65536
-                lw $t3, 0($t3)
-
-                case0: # droite
-                    # t7 = hit = dernierCoupOrdi + 1
-                    addi $t7, $t7, 1
-                    j fin_switch
-
-                case1: # haut
-                    # t7 = hit = dernierCoupOrdi - COLS
-                    sub $t7, $t7, $t3
-                    j fin_switch
-
-                case2: # gauche
-                    # t7 = hit = dernierCoupOrdi - 1
-                    subi $t7, $t7, 1
-                    j fin_switch
-
-                case3: # bas
-                    # t7 = hit = dernierCoupOrdi + COLS
-                    add $t7, $t7, $t3
-                    j fin_switch
-
-                fin_switch:
+            # choisir une direction au hasard
+            # préparation pour l'appel de random()
+            # a0 = min = 0, a1 = max = 3
+            ori $a0, $0, 0
+            ori $a1, $0, 3
+            jal random
+            # t6 = v0 = r = résultat du random
+            or $t6, $0, $v0
 
 
-                # t6 = grilleUser[hit]
-                add $t6, $t0, $t7
-                lw $t6, 0($t6)
-                # t5 = 2
-                ori $t5, $0, 2
-                # grilleUser[hit] == 2
-                beq $t6, $t5, do_while_directions
-                # t5 = 3
-                ori $t5, $0, 3
-                # grilleUser[hit] == 3
-                beq $t6, $t5, do_while_directions
+            # PREPARATION POUR LE SWITCH
 
+            # t7 = dernierCoupOrdi
+            la $t7, dernierCoupOrdi
+            # décalage mémoire à cause des .extern
+            addi $t7, $t7, 65536
+            lw $t7, 0($t7)
+            # t3 = COLS
+            la $t3, COLS
+            # décalage mémoire à cause des .extern
+            addi $t3, $t3, 65536
+            lw $t3, 0($t3)
+
+            # switch
+            switch:
+                sll $t6, $t6, 2
+                la $t5, switch_tab
+                add $t4, $t6, $t5
+                lw $t4, 0($t4)
+                jr $t4
+
+            case0: # droite
+                # t7 = hit = dernierCoupOrdi + 1
+                addi $t7, $t7, 1
+                j fin_switch
+
+            case1: # haut
+                # t7 = hit = dernierCoupOrdi - COLS
+                sub $t7, $t7, $t3
+                j fin_switch
+
+            case2: # gauche
+                # t7 = hit = dernierCoupOrdi - 1
+                subi $t7, $t7, 1
+                j fin_switch
+
+            case3: # bas
+                # t7 = hit = dernierCoupOrdi + COLS
+                add $t7, $t7, $t3
+                j fin_switch
+
+            fin_switch:
 
             j fin_if_interieur
 
 
         fin_if_interieur:
+
+            # verifier que la case choisie n'est pas déjà touchée
+
+            # t6 = hit * 4
+            sll $t6, $t7, 2
+            # t6 = grilleUser[hit]
+            add $t6, $t0, $t6
+            lw $t6, 0($t6)
+            # t5 = 2
+            ori $t5, $0, 2
+            # grilleUser[hit] == 2
+            beq $t6, $t5, else_exterieur
+            # t5 = 3
+            ori $t5, $0, 3
+            # grilleUser[hit] == 3
+            beq $t6, $t5, else_exterieur
+
+
 
         j fin_if_exterieur
 
