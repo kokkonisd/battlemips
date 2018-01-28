@@ -30,11 +30,11 @@ lw $t7, 36($sp)    #EPI on charge t7
 addiu $sp, $sp, 40 #EPI on ajuste $sp
 	.end_macro
 #variables externes
-#.extern grilleUser 400
-#.extern grilleOrdi 400
+.extern grilleOrdi 400
+.extern COLS 4
 #variables internes
-#LIGS: .word 10
-#COLS: .word 10
+grilleOrdi: .space 400
+COLS: .word 10
 MSGERRF:	.asciiz "Erreur dans le format, respectez xy avec A <= x <= J et 1 <= y <= 10"
 MSGENTC:	.asciiz "Entrez la case à jouer en respectant le format xy avec A <= x <= J et 1 <= y <= 10"
 MSGTOUCHE:	.asciiz "Vous avez tiré sur une case déjà touchée, reessayez"
@@ -45,6 +45,10 @@ CASEUSR:	.asciiz "    "
 ###############################################################################################################
 ###############################################################################################################
 ###############################################################################################################
+jal joueCoupUser
+ori $v0, $0, 10
+syscall
+
 entrezCoup:			#Elle renvoi un message en fonction de la ligne tappé par l'utilisateur désignant la case jouée $a0 = adresse message, elle renvoi l'adresse de la case en int
 	pro_t
 fausseRec_entrezCoup:		#ceci nous évite de faire une vraie reccurence et agrandir la pile en cas d'erreur, $a0 = adresse nouveau message
@@ -78,6 +82,7 @@ if_entrezCoup2:
 	blt $t1, $t2, erreur_if_entrezCoup2	#si 57 < message[1] alors il n'est pas compris entre 1 et 9, erreur
 	addi $v0, $t2, -49	#v0 = (int) message[1]
 	lw $t3, COLS 		#on en a besoin pour les lignes
+	addi $t3, $t3, 0x10000	#car dans le .extern
 	mult $v0, $t3		#on fait message[1]*COLS pour obtenir la case correspondante à la ligne
 	mflo $v0		#$v0 = ((int) message[1])*COLS
 	add $v0, $v0, $t0	#$v0 = ((int) message[i])*COLS + message[0]
@@ -97,7 +102,8 @@ if_entrezCoup3:
 	lb $t3 2($a0)		#on veut maintenant controler le deuxième chiffre
 	bne $t3, 48, erreur_if_entrezCoup3	#si message[2] != 48 alors ce n'est pas un 0, erreur
 	ori $t1, $0, 9		#on a obligatoirement un 10 du coup on fait 9*COLS pour obtenir l'indice du premier entier de la derniere file
-	lb $t2, COLS
+	lw $t2, COLS
+	addi $t2, $t2, 0x10000
 	mult $t1, $t2
 	mflo $v0		#$v0 = 9*COLS
 	add $v0, $v0, $t0	#$v0 = 9*COLS + message[0]
