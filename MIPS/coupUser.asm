@@ -30,8 +30,8 @@ lw $t7, 36($sp)    #EPI on charge t7
 addiu $sp, $sp, 40 #EPI on ajuste $sp
 	.end_macro
 #variables externes
-.extern grilleOrdi 400
-.extern COLS 4
+#.extern grilleOrdi 400
+#.extern COLS 4
 #variables internes
 MSGERRF:	.asciiz "Erreur dans le format, respectez xy avec A <= x <= J et 1 <= y <= 10"
 MSGENTC:	.asciiz "Entrez la case à jouer en respectant le format xy avec A <= x <= J et 1 <= y <= 10"
@@ -131,15 +131,15 @@ do_joueCoupUser:		#on effectue le tir tant que on a tiré sur une case déjà to
 	addi $t0, $t0, 0x10000	#car c'est dans le .extern
 	sll $v0, $v0, 2		#$v0 = 4*$v0 car on manipule des word
 	add $t0, $t0, $v0	#$t0 = adresse de GRILLECPU[coup joué], ceci nous sert à faire les modifications
-	lw $t1, ($t0)		#$t1 = GRILLECPU[coup joué]
+	lw $t1, 0($t0)		#$t1 = GRILLECPU[coup joué]
 	j do_joueCoupUser	#on boucle car on avais raté
 coupReussi_joueCoupUser:
 	ori $t1, $0, 2		#le code du coup réussi
-	sw $t1, ($t0)		#on met cette valeur dans le tableau
+	sw $t1, 0($t0)		#on met cette valeur dans le tableau
 	epi_t
 	jr $ra
 coupManque_joueCoupUser:
 	ori $t1, $0, 3		#le code du coup manqué
-	sw $t1, ($t0)		#on met cette valeur dans le tableau
+	sw $t1, 0($t0)		#on met cette valeur dans le tableau
 	epi_t
 	jr $ra

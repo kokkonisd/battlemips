@@ -140,11 +140,13 @@ fctJouerBataille:
 
         # -- DEBUT PARTIE UTILISATEUR --
 
-        # appel de la fonction jouerCoupUser
-        jal jouerCoupUser
+        # appel de la fonction joueCoupUser
+        jal joueCoupUser
 
-        # t3 = dernierCoupUser = jouerCoupUser();
+        # t3 = dernierCoupUser = joueCoupUser();
         or $t3, $0, $v0
+        # le dernierCoupUser est multiplié par 4, on corrige ça
+        srl $t3, $t3, 2
 
 
         # afficherJeu()
@@ -242,17 +244,17 @@ fctJouerBataille:
             ori $t5, $0, 2
             # branchement si la condition du if est fausse
             # if (grilleUser[dernierCoupOrdi] == 2)
-            bne $t4, $t5, else_interieur_1
+            bne $t4, $t5, else_interieur_2
 
             # t6 = @verdict = @"réussi"
             la $t6, chaineReussi
 
-            # rappel: t1 = coupsOrdi
+            # rappel: t0 = coupsOrdi
             # coupsOrdi++
-            addi $t1, $t1, 1
+            addi $t0, $t0, 1
             # enregistrer la nouvelle valeur de coupsOrdi
             la $a0, coupsOrdi
-            sw $t1, 0($a0)
+            sw $t0, 0($a0)
 
             j if_interieur_2_fin
 
@@ -272,7 +274,7 @@ fctJouerBataille:
         jal fctCaseLisible
 
         # afficher le résultat de fctCaseLisible
-        or $v0, $0, $a0
+        or $a0, $0, $v0
         ori $v0, $0, 4
         syscall
 
@@ -327,7 +329,7 @@ fctJouerBataille:
 main:
     # lancer le jeu
     jal fctJouerBataille
-
+    
     # quitter le programme
     ori $v0, $0, 10
     syscall
